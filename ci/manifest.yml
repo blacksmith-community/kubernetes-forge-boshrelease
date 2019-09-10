@@ -1,0 +1,37 @@
+name: kubernetes-forge-ci
+
+instance_groups:
+- name: kubernetes-forge
+  instances: 1
+  azs:       [z1]
+  vm_type:   default
+  stemcell:  default
+  networks:
+    - name: default
+  jobs:
+    - name: kubernetes-blacksmith-plans
+      release: kubernetes-forge
+      properties:
+        plans:
+          single-node:
+            name:        single-node
+            description: A single-node cluster
+            limit:       7
+            type:        cluster
+            nodes:       1
+
+update:
+  canaries: 0
+  max_in_flight: 1
+  serial: true
+  canary_watch_time: 1000-120000
+  update_watch_time: 1000-120000
+
+stemcells:
+- alias: default
+  os: ubuntu-xenial
+  version: latest
+
+releases:
+- name: kubernetes-forge
+  version: latest

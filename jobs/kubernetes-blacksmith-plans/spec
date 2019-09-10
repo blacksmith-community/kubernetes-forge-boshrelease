@@ -1,0 +1,70 @@
+name: kubernetes-blacksmith-plans
+packages: []
+templates:
+  bin/configure-blacksmith: bin/configure-blacksmith
+
+  plans/service.yml:             plans/service.yml
+
+  # generic, resizable kubernetes cluster
+  plans/cluster/manifest.yml:    plans/cluster/manifest.yml
+  plans/cluster/credentials.yml: plans/cluster/credentials.yml
+  plans/cluster/init:            plans/cluster/init
+
+properties:
+  service.id:
+    description: Machine-friendly name for this service.
+    default: kubernetes
+
+  service.name:
+    description: Human-friendly name for this service, to be displayed in the Cloud Foundry marketplace.
+    default: kubernetes
+
+  service.description:
+    description: A description for this service, to be displayed in the Cloud Foundry marketplace.
+    default: A dedicated kubernetes cluster, deployed just for you.
+
+  service.tags:
+    description: List of tags to apply to service instances.
+    default: [blacksmith, dedicated, kubernetes]
+
+  service.limit:
+    description: A global limit on the number of Kubernetes services (regardless of the plan); 0 = unlimited.
+    default: 0
+
+  plans:
+    description: |
+      A map of plans.  I.e.:
+
+        small:
+          name: Single-Node Kubernetes Cluster
+          description: A single-node Kubernetes cluster, with no redundancy or replication
+          limit: 7
+          type: cluster
+          nodes: 1
+
+      Configuration keys beyond `name', `description', `limit', and `type' are type-specific.
+
+      For type=cluster:
+
+        nodes            How many Kubernetes cluster nodes to spin up.
+                         Defaults to 3.
+
+        azs              A list of BOSH availability zones to stripe deployments across.
+                         Defaults to [z1,z2,z3].
+
+        network          The name of the network to deploy each cluster instance to.
+                         Defaults to 'kubernetes-service'.
+
+        node_cpus        How many compute cores to allocate each Kubernetes node.
+                         Defaults to '2'.
+
+        node_mem         How much memory (in megabytes) to allocate each Kubernetes node.
+                         Defaults to '2048' (2G).
+
+        node_ephemeral   How much ephemeral disk to allocate each Kubernetes node.
+                         This must be specified in megabytes.
+                         Defaults to '20_480' (20G).
+
+        node_persistent  How much persistent disk to allocate each Kubernetes node.
+                         This must be specified in megabytes.
+                         Defaults to '20_480' (20G).
