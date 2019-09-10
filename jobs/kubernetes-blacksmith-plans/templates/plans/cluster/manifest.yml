@@ -1,5 +1,12 @@
 ---
 meta:
+  nodes: 3
+  node_cpu: 2
+  node_mem: 2048
+  node_ephemeral:  20_480
+  node_persistent: 20_480
+  network: kubernetes-service
+
   default:
     azs: [z1, z2, z3]
 
@@ -32,15 +39,15 @@ update:
 
 instance_groups:
   - name:      k8s
-    instances: (( grab meta.nodes || 3 ))
+    instances: (( grab meta.nodes ))
     azs:       (( grab meta.azs || meta.default.azs ))
-    networks:  [name: (( grab meta.network || 'kubernetes-service' ))]
+    networks:  [name: (( grab meta.network ))]
     stemcell:  default
     vm_resources:
-      cpu: (( grab meta.node_cpu || 2 ))
-      ram: (( grab meta.node_mem || 2048 ))
-      ephemeral_disk_size: (( grab meta.node_ephemeral || 20_480 ))
-    persistent_disk: (( grab meta.node_persistent || 20_480 ))
+      cpu: (( grab meta.node_cpu ))
+      ram: (( grab meta.node_mem ))
+      ephemeral_disk_size: (( grab meta.node_ephemeral ))
+    persistent_disk: (( grab meta.node_persistent ))
 
     jobs:
       - name: etcd
@@ -58,7 +65,7 @@ instance_groups:
               rules:
                 - level: Request
           cluster:
-            name: (( grab name ))
+            name: cluster0
             dns:  10.245.0.2
           networks:
             nodes:    0.0.0.0/32

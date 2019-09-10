@@ -55,7 +55,7 @@ properties:
         network          The name of the network to deploy each cluster instance to.
                          Defaults to 'kubernetes-service'.
 
-        node_cpus        How many compute cores to allocate each Kubernetes node.
+        node_cpu         How many compute cores to allocate each Kubernetes node.
                          Defaults to '2'.
 
         node_mem         How much memory (in megabytes) to allocate each Kubernetes node.

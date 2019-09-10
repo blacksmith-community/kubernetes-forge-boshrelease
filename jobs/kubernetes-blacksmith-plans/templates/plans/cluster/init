@@ -1,5 +1,5 @@
 #!/bin/bash
-set -eu
+set -eux
 
 # init - Bootstrap Script for Kubernetes Forge.
 #        Generates username and password for the
@@ -10,11 +10,11 @@ safe gen -l 32 ${CREDENTIALS}/control encryption-key
 
 # X.509 Certificate Authority for all the things (except signing)
 safe x509 issue ${CREDENTIALS}/x509/ca \
-  --ca --n ca.k8s.deployed.blacksmithproject.io
+  --ca -n ca.k8s.deployed.blacksmithproject.io
 
 # X.509 Certificate Authority for signing
-safe x509 issue ${CREDENTIALS}/c509/sa \
-  --ca --n sa.k8s.deployed.blacksmithproject.io
+safe x509 issue ${CREDENTIALS}/x509/sa \
+  --ca -n sa.k8s.deployed.blacksmithproject.io
 
 # Issue an administrator certificate, so that we can
 # include it in the credentials we give back to the
@@ -22,6 +22,7 @@ safe x509 issue ${CREDENTIALS}/c509/sa \
 safe x509 issue ${CREDENTIALS}/x509/admin \
   --signed-by ${CREDENTIALS}/x509/ca \
   -s /cn=admin/o=system:masters \
-  -b 2048
+  -b 2048 \
+  -n admin
 
 exit 0
