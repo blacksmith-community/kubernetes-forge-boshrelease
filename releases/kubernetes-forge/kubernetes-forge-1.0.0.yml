@@ -1,0 +1,14 @@
+name: kubernetes-forge
+version: 1.0.0
+commit_hash: 9e32de0
+uncommitted_changes: false
+jobs:
+- name: kubernetes-blacksmith-plans
+  version: fc5122934ce65a6c6292f292054d1cf88e4140eb617453e0dab4fa4c097edbcb
+  fingerprint: fc5122934ce65a6c6292f292054d1cf88e4140eb617453e0dab4fa4c097edbcb
+  sha1: sha256:b478979adf003e8bb3d18ea27528e37ce913b95b4fd4a34bac05c06f1fccf3da
+  packages: []
+license:
+  version: 8820acd566a31ce42b08d477883d9e40baab3c05aae65e981699750edc18b481
+  fingerprint: 8820acd566a31ce42b08d477883d9e40baab3c05aae65e981699750edc18b481
+  sha1: sha256:a7b7c33771a2021e1619014380a0cb87e16e434114db5bfdbe7cabb5ea8f0e17
